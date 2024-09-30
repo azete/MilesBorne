@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.Collections;
 import java.util.List;
 
 public class GestionCartes {
@@ -9,5 +10,9 @@ public class GestionCartes {
 		}
 		int index = (int) (Math.random() * liste.size());
 		return liste.remove(index);
+	}
+	public static <T> List<T> melanger(List<T> liste) {
+		Collections.shuffle(liste);
+		return liste;
 	}
 }
