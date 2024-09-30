@@ -27,5 +27,8 @@ public class testJeuDeCarte {
 		for (int i = 0; i < yes.length; i++) {
 			System.out.println(yes[i]);
 		}
+		if (!jeuDeCartes.checkCount()) {
+            System.out.println("erreur de nombre");
+        }
 	}
 }
