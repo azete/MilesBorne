@@ -1,4 +1,4 @@
-package Carte;
+package cartes;
 
 public enum Type {
 	FEU ("Feu Rouge","Feu Vert", "Vehicule Prioritaire"), 

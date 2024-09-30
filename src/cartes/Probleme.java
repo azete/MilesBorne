@@ -1,9 +1,9 @@
-package Carte;
+package cartes;
 
-import Carte.carte;
-import Carte.Type;
+import cartes.Carte;
+import cartes.Type;
 
-public abstract class Probleme extends carte {
+public abstract class Probleme extends Carte {
 
 	private Type type;
 

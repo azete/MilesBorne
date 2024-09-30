@@ -1,4 +1,4 @@
-package Carte;
+package cartes;
 
 public class Parade extends Bataille {
 

@@ -1,41 +1,59 @@
 package testsFonctionnels;
-import jeu.*;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-import Carte.*;
+import cartes.*;
+import jeu.Sabot;
 
 public class TestSabot {
-	public static void main(String[] args) {
-		Sabot sabot=new Sabot(110,0);
-		sabot.ajouterCarte(new Borne(25));
-		sabot.ajouterCarte(new Borne(25));
-		sabot.ajouterCarte(new Borne(25));
-		sabot.ajouterCarte(new Attaque(Type.FEU));
-		sabot.ajouterCarte(new Parade(Type.FEU));
-		sabot.ajouterCarte(new Botte(Type.FEU));
-		// exo 2 a)
-		for (int i=0;i<5;i++) {
-			sabot.piocher();
+	JeuDeCartes jeu = new JeuDeCartes();
+	Sabot sabot = new Sabot(jeu.donnerCartes());
+
+	// 4.2.a
+	public void questionA() {
+
+		while (!sabot.estVide()) {
+			Carte carte = sabot.piocher();
+			System.out.println("Je pioche " + carte);
 		}
-		
-//		//exo 2 b)
-//		Iterator<carte> oui=sabot.iterator();
-//		for (int i=0;i<3;i++) {
-//			oui.next();
-//			oui.remove();
-//		}
-//		// exo 2 c)
-//		Iterator<carte> non=sabot.iterator();
-//		for (int i=0;i<3;i++) {
-//			try {
-//				non.next();
-//				non.remove();
-//				sabot.piocher();
-//			}catch(ConcurrentModificationException e) {
-//				throw new ConcurrentModificationException();
-//			}
-//		}
+//		Console :
+//		Je pioche Accident
+//		Je pioche Accident
+//		Je pioche Accident
+//		Je pioche R�paration
+//		Je pioche R�paration
+//		Je pioche R�paration
+//		Je pioche As du volant
 	}
+
+	// 4.2.b
+	public void questionB() {
+		for (Iterator<Carte> iterator = sabot.iterator(); iterator.hasNext();) {
+			System.out.println("Je pioche " + iterator.next());
+			iterator.remove();
+		}
+	}
+//
+//	// 4.2.c
+	public void questionC() {
+		Carte cartePiochee = sabot.piocher();
+		System.out.println("Je pioche " + cartePiochee);
+		for (Iterator<Carte> iterator = sabot.iterator(); iterator.hasNext();) {
+			Carte carte = iterator.next();
+			System.out.println("Je pioche " + carte);
+			iterator.remove();
+//			Carte cartePiochee = sabot.piocher();
+//			sabot.ajouterCarte(new Botte(cartes.Type.ACCIDENT));
+		}
+		Iterator<Carte> iterator = sabot.iterator();
+		System.out.println("\nLa pioche contient encore des cartes ? " + iterator.hasNext());
+	}
+
+	public static void main(String[] args) {
+		TestSabot testPioche = new TestSabot();
+//		testPioche.questionA();
+//		testPioche.questionB();
+		testPioche.questionC();
+	}
+
 }

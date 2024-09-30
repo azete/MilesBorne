@@ -1,4 +1,4 @@
-package Carte;
+package cartes;
 
 public class DebutLimite extends Limite {
 	public String toString() {

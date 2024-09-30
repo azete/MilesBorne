@@ -1,6 +1,6 @@
-package Carte;
+package cartes;
 
-public class Borne extends carte{
+public class Borne extends Carte{
 	private int km;
 	
 

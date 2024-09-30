@@ -1,74 +1,88 @@
 package jeu;
-import Carte.carte;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import cartes.Carte;
+
 import java.util.ConcurrentModificationException;
 
-public class Sabot implements Iterable<carte>{
+public class Sabot implements Iterable<Carte> {
 	private int nbCartes;
-	carte[] cartes;
-	private int nombreCartesMax;
-	private int indiceIterateur=0;
-	private int nbOperations=0;
-	
-	public Sabot(int nombreCartesMax, int nbCartes) {
-		this.nombreCartesMax=nombreCartesMax;
-		cartes= new carte[nombreCartesMax];
-		this.nbCartes=nbCartes;
+	private Carte[] cartes;
+	private int indiceIterateur = 0;
+	private int nbOperations = 0;
+
+	public Sabot(Carte[] cartes) {
+		this.cartes = cartes;
+		this.nbCartes = cartes.length;
+
 	}
-	
+
 	public boolean estVide() {
-		return (nbCartes==0);
+		return (nbCartes == 0);
 	}
-	
-	public void ajouterCarte(carte carte) {
+
+	public void ajouterCarte(Carte carte) {
 		try {
-			cartes[nbCartes]=carte;
+			cartes[nbCartes] = carte;
 			nbCartes++;
-		}catch (NullPointerException e) {
-			System.out.println("depassement de la capacité");
+			nbOperations++;
+		} catch (NullPointerException e) {
+			System.out.println(" depassement de la capacité");
 		}
 	}
-	
-	public carte piocher() {
-		Iterateur it=new Iterateur();
-		carte c=it.next();
+
+	public Carte piocher() {
+		Iterateur it = new Iterateur();
+		Carte carte = it.next();
 		it.remove();
-		return c;
+		return carte;
 	}
-	
-	public Iterator<carte> iterator() {
+
+	public Iterator<Carte> iterator() {
 		return new Iterateur();
 	}
-	
-	private class Iterateur implements Iterator<carte>{
-		private boolean nextEffectue=false;
-		private int nbOperationReference=nbOperations;
-		
+
+	private class Iterateur implements Iterator<Carte> {
+		private boolean nextEffectue = false;
+		private int nbOperationReference = nbOperations;
+
+		@Override
 		public boolean hasNext() {
-			return indiceIterateur<nbCartes;
+			return indiceIterateur < nbCartes;
 		}
-		
-		public carte next() {
+		@Override
+		public Carte next() {
 			verificationOperation();
 			if (hasNext()) {
-				carte carte=cartes[indiceIterateur];
+				Carte carte = cartes[indiceIterateur];
 				indiceIterateur++;
-				nextEffectue=true;
-				System.out.println("je pioche" + carte.toString());
+				nextEffectue = true;
+				System.out.println("je pioche " + carte.toString());
 				return carte;
-			}else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
+
 		private void verificationOperation() {
-			if (nbOperations!=nbOperationReference)
+			if (nbOperations != nbOperationReference)
 				throw new ConcurrentModificationException();
 		}
+		
+		@Override
 		public void remove() {
 			verificationOperation();
-			cartes[nbCartes]=null;
-			nbCartes-=1;
+			if (nbCartes<1 || !nextEffectue) {
+				throw new IllegalStateException();
+			}
+			for (int i=indiceIterateur-1;i<nbCartes-1;i++) {
+				cartes[i]=cartes[i+1];
+			}
+			nextEffectue=false;
+			indiceIterateur--;
+			nbCartes --;
 			nbOperationReference++;
 			nbOperations++;
 		}
