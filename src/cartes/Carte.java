@@ -14,5 +14,10 @@ public abstract class Carte {
         }
         Carte carte = (Carte) obj;
         return this.getClass() == carte.getClass();
+//		if (obj instanceof Carte) {
+//			Carte carte = (Carte) obj;
+//			return this.getClass() == carte.getClass();
+//		}
+//		return false;
     }
 }

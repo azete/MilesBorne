@@ -57,31 +57,50 @@ public class JeuDeCartes {
 
 	}
 
+//	public boolean checkCount() {
+//		int countLimite = 0;
+//		int countBotte = 0;
+//		int countAttaque = 0;
+//		int countParade = 0;
+//		int countBorne = 0;
+//		for (Carte carte : donnerCartes()) {
+//			if (carte instanceof Attaque) {
+//				countAttaque++;
+//			} else if (carte instanceof Parade) {
+//				countParade++;
+//			} else if (carte instanceof DebutLimite || carte instanceof FinLimite) {
+//				countLimite++;
+//			} else if (carte instanceof Botte) {
+//				countBotte++;
+//			}
+//			else if (carte instanceof Borne) {
+//				countBorne++;
+//			}
+//		}
+//		System.out.println("Il y a " + countBorne + " Cartes Bornes.");
+//		System.out.println("Il y a " + countLimite + " Cartes Limite.");
+//		System.out.println("Il y a " + countBotte + " Cartes Bottes.");
+//		System.out.println("Il y a " + countParade + " Cartes Parade.");
+//		System.out.println("Il y a " + countAttaque + " Cartes Attaque.");
+//		return countBorne==46 && countLimite == 10 && countBotte == 4 && countParade == 32 && countAttaque == 14;
+//	}
 	public boolean checkCount() {
-		int countLimite = 0;
-		int countBotte = 0;
-		int countAttaque = 0;
-		int countParade = 0;
-		int countBorne = 0;
-		for (Carte carte : donnerCartes()) {
-			if (carte instanceof Attaque) {
-				countAttaque++;
-			} else if (carte instanceof Parade) {
-				countParade++;
-			} else if (carte instanceof DebutLimite || carte instanceof FinLimite) {
-				countLimite++;
-			} else if (carte instanceof Botte) {
-				countBotte++;
-			}
-			else if (carte instanceof Borne) {
-				countBorne++;
+		Carte[] carte=donnerCartes();
+		for (int i=0;i<carte.length;i=i+count(carte, carte[i])) {
+			System.out.println(count(carte, carte[i]));
+			if (count(carte, carte[i])!=typesDeCartes[i].nbExemplaires) {
+				return false;
 			}
 		}
-		System.out.println("Il y a " + countBorne + " Cartes Bornes.");
-		System.out.println("Il y a " + countLimite + " Cartes Limite.");
-		System.out.println("Il y a " + countBotte + " Cartes Bottes.");
-		System.out.println("Il y a " + countParade + " Cartes Parade.");
-		System.out.println("Il y a " + countAttaque + " Cartes Attaque.");
-		return countBorne==46 && countLimite == 10 && countBotte == 4 && countParade == 32 && countAttaque == 14;
+		return true;
+	}
+	public int count(Carte[] carte, Carte cartes) {
+		int nb=0;
+		for (Carte i: carte) {
+			if (i.equals(cartes)) {
+				nb++;
+			}
+		}
+		return nb;
 	}
 }
